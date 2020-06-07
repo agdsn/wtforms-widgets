@@ -12,6 +12,7 @@ setup(
     zip_safe=False,
     python_requires=">= 3.4",
     install_requires=[
+        'Flask',
         'Flask-WTF',
         'MarkupSafe',
         'WTForms',

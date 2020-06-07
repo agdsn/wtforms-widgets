@@ -1,6 +1,6 @@
+import re
 from datetime import datetime
 from itertools import chain
-import re
 
 import wtforms
 import wtforms_sqlalchemy.fields
@@ -174,7 +174,7 @@ class DateField(wtforms.fields.DateField):
         else:
             message = "Unknown format directive: %{}".format(directive)
             raise ValueError(message)
-        return percentage_signs[0:percentage_sign_count//2] + replacement
+        return percentage_signs[0:percentage_sign_count // 2] + replacement
 
     @classmethod
     def convert_format_string(cls, format):

@@ -1,11 +1,10 @@
+from functools import reduce
 from itertools import chain
 
-from markupsafe import escape, Markup
-import wtforms_sqlalchemy.fields
 import wtforms.fields
+from flask import url_for
+from markupsafe import escape
 from wtforms.widgets.core import html_params, HTMLString
-
-from functools import reduce
 
 
 class WidgetDecorator(object):
@@ -27,19 +26,21 @@ class BootstrapFormGroupDecorator(WidgetDecorator):
     The widget's output is wrapped in a Bootstrap form-group. Any field errors
     are displayed in Bootstrap help-blocks after the widget.
     """
+
     def __call__(self, field, **kwargs):
         classes = [u'form-group']
         if field.errors:
             classes.append(u'has-error')
         return HTMLString(u''.join([
             Markup(u'<div class="{0}" id="form-group-' + field.name + '">')
-            .format(u' '.join(classes)),
+                .format(u' '.join(classes)),
             self.widget(field, **kwargs),
             u'</div>']))
 
 
 class BootstrapFormControlDecorator(WidgetDecorator):
     """Adds the Bootstrap form-control class to a widget."""
+
     def __call__(self, field, **kwargs):
         if 'class_' in kwargs:
             kwargs['class_'] = u'form-control ' + kwargs['class_']
@@ -55,6 +56,7 @@ class BootstrapStandardDecorator(WidgetDecorator):
     Horizontal layout is a two column layout, where the label is placed in the
     left column and the field is placed right next to it.
     """
+
     def render_horizontal(self, field, **kwargs):
         html = [u'<div class="col-sm-5">',
                 field.label(class_=u'control-label'),
@@ -173,6 +175,7 @@ class BootstrapFormFieldWidget(object):
 
 class BootstrapStaticFieldWidget(object):
     """Render a static Bootstrap control."""
+
     def __call__(self, field, **kwargs):
         kwargs["class_"] = u"form-control-static"
         # Assume that the field provides access to its value.
@@ -220,6 +223,7 @@ from markupsafe import Markup
 
 class BootstrapDatepickerWidget(object):
     """Renders datetime fields using bootstrap-datepicker."""
+
     def __call__(self, field, **kwargs):
         kwargs["data-provide"] = u"datepicker"
         for (option, value) in field.datepicker_options.items():
@@ -236,6 +240,7 @@ class CheckBoxWidget(wtforms.widgets.Select):
 
     It uses the bootstrap markup.
     """
+
     def __call__(self, field, **kwargs):
         kwargs.setdefault('type', 'checkbox')
         field_id = kwargs.pop('id', field.id)
@@ -263,7 +268,7 @@ class LazyLoadSelectWidget(wtforms.widgets.Select):
         if conditions is not None:
             kwargs["data-fieldids"] = ",".join(conditions)
         kwargs['data-role'] = u'lazy-load-select'
-        kwargs['data-url'] = field.data_endpoint
+        kwargs['data-url'] = url_for(field.data_endpoint)
         kwargs['value'] = str(field.data)
 
         return super(LazyLoadSelectWidget, self).__call__(field, **kwargs)
@@ -277,6 +282,7 @@ class Disabler(WidgetDecorator):
 
 class MoneyFieldDecorator(WidgetDecorator):
     """Adds the Bootstrap form-control class to a widget."""
+
     def __call__(self, field, **kwargs):
         kwargs['class_'] += ' money-amount'
         return (u"<div class=\"input-group\">" + self.widget(field, **kwargs) +
@@ -285,6 +291,7 @@ class MoneyFieldDecorator(WidgetDecorator):
 
 class MacFieldDecorator(WidgetDecorator):
     """Adds an addon which shows the vendor."""
+
     def __call__(self, field, **kwargs):
         return (u"<div class=\"input-group\">" + self.widget(field, **kwargs) +
                 u"<span class=\"input-group-addon mac-manufacturer\">?</span></div>")

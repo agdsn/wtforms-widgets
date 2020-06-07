@@ -1,10 +1,11 @@
+from wtforms import fields
+from wtforms.validators import ValidationError
+
 from . import core
 from ..widgets import LazyLoadSelectWidget, \
     BootstrapFormControlDecorator, BootstrapStandardDecorator, \
     BootstrapFormGroupDecorator, decorate, BootstrapStaticFieldWidget, \
     decorators, decorate_field, Disabler, MacFieldDecorator
-from wtforms import fields
-from wtforms.validators import ValidationError
 
 
 def static(field):
@@ -109,7 +110,7 @@ class IntervalField(core.StringField):
             self.data = default_interval_format(self.expected_units)
         return super(IntervalField, self).__call__(
             class_='pycroft-interval-picker',
-            #autocomplete='off',
+            # autocomplete='off',
             **kwargs
         )
 
@@ -147,6 +148,7 @@ class MacField(fields.StringField):
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
     )
+
     def __init__(self, *args, **kwargs):
         super(MacField, self).__init__(*args, **kwargs)
 
@@ -155,4 +157,3 @@ class MacField(fields.StringField):
             data_role='mac-address-input',
             **kwargs
         )
-

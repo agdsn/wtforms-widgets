@@ -223,10 +223,10 @@ class SubmitField(wtforms.fields.SubmitField):
 
 
 class QuerySelectField(
-    wtforms.ext.sqlalchemy.fields.QuerySelectField
+    wtforms_sqlalchemy.fields.QuerySelectField
 ):
     widget = decorate_field(
-        wtforms.ext.sqlalchemy.fields.QuerySelectField,
+        wtforms_sqlalchemy.fields.QuerySelectField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
@@ -234,10 +234,10 @@ class QuerySelectField(
 
 
 class QuerySelectMultipleField(
-    wtforms.ext.sqlalchemy.fields.QuerySelectMultipleField
+    wtforms_sqlalchemy.fields.QuerySelectMultipleField
 ):
     widget = decorate_field(
-        wtforms.ext.sqlalchemy.fields.QuerySelectMultipleField,
+        wtforms_sqlalchemy.fields.QuerySelectMultipleField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator

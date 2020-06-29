@@ -30,6 +30,10 @@ class BootstrapFormGroupDecorator(WidgetDecorator):
     def __call__(self, field, **kwargs):
         classes = [u'form-group']
         if field.errors:
+            # TODO this is unsupported since BSv4
+            # :valid is used instead, so we should use builtin
+            # https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
+            # where possible.
             classes.append(u'has-error')
         return HTMLString(u''.join([
             Markup(u'<div class="{0}" id="form-group-' + field.name + '">')
@@ -59,13 +63,13 @@ class BootstrapStandardDecorator(WidgetDecorator):
 
     def render_horizontal(self, field, **kwargs):
         html = [u'<div class="col-sm-5">',
-                field.label(class_=u'control-label'),
+                field.label(class_=u'col-form-label'),
                 u'</div>',
                 u'<div class="col-sm-7">',
                 self.widget(field, **kwargs),
                 u'</div>']
         help_block = Markup(u'<div class="col-sm-12">'
-                            u'<span class="help-block">{0}</span>'
+                            u'<span class="form-text">{0}</span>'
                             u'</div>')
         if field.description:
             html.append(help_block.format(field.description))
@@ -82,7 +86,7 @@ class BootstrapStandardDecorator(WidgetDecorator):
         html = [field.label(),
                 '<br/>',
                 self.widget(field, **kwargs)]
-        help_block = Markup(u'<span class="help-block">{0}</span>')
+        help_block = Markup(u'<span class="form-text">{0}</span>')
         if field.description:
             html.append(help_block.format(field.description))
         html.extend(help_block.format(e) for e in field.errors)
@@ -111,6 +115,8 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
 
     def _render(self, field, **kwargs):
         return HTMLString(u''.join([
+            # TODO fix that: we now have the following schema
+            # https://getbootstrap.com/docs/4.0/components/forms/#horizontal-form
             u'<div class="',
             self.wrapper_class,
             u'">',
@@ -127,7 +133,7 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
 
     def render_horizontal(self, field, **kwargs):
         return HTMLString(u''.join([
-            u'<div class="col-sm-offset-5 col-sm-7">',
+            u'<div class="offset-sm-5 col-sm-7">',
             self._render(field, **kwargs),
             u'</div>',
         ]))
@@ -161,7 +167,7 @@ class BootstrapCheckboxDecorator(BootstrapRadioCheckboxDecorator):
 class BootstrapFieldListWidget(object):
     def __call__(self, field, **kwargs):
         return HTMLString(u''.join(chain(
-            (Markup(u'<p class="help-block">{0}</p>').format(e) for e in field.errors),
+            (Markup(u'<p class="form-text">{0}</p>').format(e) for e in field.errors),
             (f(**kwargs) for f in field)
         )))
 

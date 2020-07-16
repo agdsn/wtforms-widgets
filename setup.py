@@ -5,7 +5,7 @@ setup(
     author="The Pycroft Authors",
     description="Decorator driven wtforms extension with Bootstrap 3 support for Flask",
     long_description=__doc__,
-    version="1.0.4",
+    version="1.0.5",
     url="http://github.com/agdsn/wtforms-widgets/",
     packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,

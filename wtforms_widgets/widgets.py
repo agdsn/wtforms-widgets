@@ -30,11 +30,7 @@ class BootstrapFormGroupDecorator(WidgetDecorator):
     def __call__(self, field, **kwargs):
         classes = [u'form-group']
         if field.errors:
-            # TODO this is unsupported since BSv4
-            # :valid is used instead, so we should use builtin
-            # https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
-            # where possible.
-            classes.append(u'has-error')
+            classes.append(u'text-danger')
         return HTMLString(u''.join([
             Markup(u'<div class="{0}" id="form-group-' + field.name + '">')
                 .format(u' '.join(classes)),
@@ -50,6 +46,10 @@ class BootstrapFormControlDecorator(WidgetDecorator):
             kwargs['class_'] = u'form-control ' + kwargs['class_']
         else:
             kwargs['class_'] = u'form-control'
+
+        if field.errors:
+            kwargs['class_'] += ' is-invalid'
+
         return self.widget(field, **kwargs)
 
 
@@ -62,12 +62,14 @@ class BootstrapStandardDecorator(WidgetDecorator):
     """
 
     def render_horizontal(self, field, **kwargs):
-        html = [u'<div class="col-sm-5">',
+        html = ['<div class="row">',
+                '<div class="col-sm-4">',
                 field.label(class_=u'col-form-label'),
-                u'</div>',
-                u'<div class="col-sm-7">',
+                '</div>',
+                '<div class="col-sm-4">',
                 self.widget(field, **kwargs),
-                u'</div>']
+                '</div>',
+                '</div>']
         help_block = Markup(u'<div class="col-sm-12">'
                             u'<span class="form-text">{0}</span>'
                             u'</div>')
@@ -133,7 +135,7 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
 
     def render_horizontal(self, field, **kwargs):
         return HTMLString(u''.join([
-            u'<div class="offset-sm-5 col-sm-7">',
+            u'<div class="offset-sm-4 col-sm-4">',
             self._render(field, **kwargs),
             u'</div>',
         ]))

@@ -1,5 +1,5 @@
 import re
-from wtforms.validators import Optional, Regexp
+from wtforms.validators import Optional, Regexp, ValidationError
 
 mac_regex = re.compile(r"^[a-f0-9]{2}(:[a-f0-9]{2}){5}$")
 
@@ -16,9 +16,15 @@ class OptionalIf(Optional):
         if deciding_field is None:
             raise Exception('no field named "{}" in form'.format(
                 self.deciding_field))
-        if (bool(deciding_field.data) and deciding_field.data != 'None')\
-                ^ self.invert:
-            super(OptionalIf, self).__call__(form, field)
+
+        deciding_field_populated = (
+            bool(deciding_field.data)
+            and deciding_field.data != 'None'
+        )
+        if deciding_field_populated ^ self.invert:
+            super().__call__(form, field)
+        elif not field.data:
+            raise ValidationError(field.gettext("This field is required."))
 
 
 class MacAddress(Regexp):

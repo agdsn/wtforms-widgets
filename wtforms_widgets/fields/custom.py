@@ -35,21 +35,38 @@ class LazyLoadSelectField(fields.SelectField):
     simple string - then the value of the generated <option> element is the
     same as its label or a array of two elements: [value, label].
 
+    An example usage in a form would look like this:
+
+        >>> from flask_wtf import FlaskForm as Form
+        >>> from wtforms import StringField
+        >>> class StreetForm(Form):
+        >>>     city = StringField("city")
+        >>>     zip_code = LazyLoadSelectField(
+        >>>         "Zip code",
+        >>>         conditions=['city'],
+        >>>         data_endpoint='get_zip_codes'
+        >>>     )
+
     The request is a get xhr request sending the dependency values as url
     arguments. A sample implementation can be:
 
-        @bp.route('/json/levels')
-        def json_levels():
-            if not request.is_xhr:
-                abort(404)
-            building_id = request.args.get('building', 0, type=int)
-            [...]
-            return jsonify(dict(items=[entry.level for entry in levels]))
+        >>> from flask import Flask, request, abort, jsonify
+        >>> app = Flask('app')
+        >>> @app.route('/zip_codes')
+        >>> def get_zip_codes():
+        >>>     if not request.is_xhr:
+        >>>         abort(404)
+        >>>     city = request.args.get('city', "Dresden", type=str).lower()
+        >>>     # …
+        >>>     return ['01217'] if city == 'Dresden' else list(range(10000))
 
     The get arguments has the same name as the id of the dependency.
 
     As widget the LazyLoadSelectWidget is used. It renders everything
     automatically. You need only the form.js and the initializing js code:
+
+    .. codeblock :: html
+
         {{ resources.link_script_file('js/form.js') }}
         <script type="text/javascript">
             $('[data-role=lazy-load-select]').lazyLoadSelect()

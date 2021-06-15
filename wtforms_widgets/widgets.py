@@ -153,12 +153,11 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
         render_mode = kwargs.pop("render_mode", "horizontal")
         if render_mode == "basic":
             return self.render_basic(field, **kwargs)
-        elif render_mode == "horizontal":
+        if render_mode == "horizontal":
             return self.render_horizontal(field, **kwargs)
-        elif render_mode == "inline":
+        if render_mode == "inline":
             return self.render_inline(field, **kwargs)
-        else:
-            raise ValueError("Unknown render mode: {0}".format(render_mode))
+        raise ValueError(f"Unknown render mode: {render_mode}")
 
 
 class BootstrapRadioDecorator(BootstrapRadioCheckboxDecorator):

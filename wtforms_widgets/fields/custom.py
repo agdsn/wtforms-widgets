@@ -5,7 +5,8 @@ from . import core
 from ..widgets import LazyLoadSelectWidget, \
     BootstrapFormControlDecorator, BootstrapStandardDecorator, \
     BootstrapFormGroupDecorator, decorate, BootstrapStaticFieldWidget, \
-    decorators, decorate_field, Disabler, MacFieldDecorator
+    decorators, decorate_field, Disabler, MacFieldDecorator, \
+    BootstrapFormSelectDecorator
 
 
 def static(field):
@@ -79,6 +80,7 @@ class LazyLoadSelectField(fields.SelectField):
     widget = decorate(
         LazyLoadSelectWidget(),
         BootstrapFormControlDecorator,
+        BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
     )

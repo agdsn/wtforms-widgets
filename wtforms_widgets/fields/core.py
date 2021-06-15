@@ -10,13 +10,15 @@ from ..widgets import decorate_field, BootstrapFormControlDecorator, \
     BootstrapStandardDecorator, BootstrapFormGroupDecorator, \
     BootstrapRadioDecorator, BootstrapCheckboxDecorator, \
     BootstrapFieldListWidget, BootstrapFormFieldWidget, \
-    BootstrapDatepickerWidget, MoneyFieldDecorator, decorate
+    BootstrapDatepickerWidget, MoneyFieldDecorator, decorate, \
+    BootstrapFormSelectDecorator
 
 
 class SelectField(wtforms.fields.SelectField):
     widget = decorate_field(
         wtforms.fields.SelectField,
         BootstrapFormControlDecorator,
+        BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
     )
@@ -26,6 +28,7 @@ class SelectMultipleField(wtforms.fields.SelectMultipleField):
     widget = decorate_field(
         wtforms.fields.SelectMultipleField,
         BootstrapFormControlDecorator,
+        BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
     )
@@ -229,6 +232,7 @@ class QuerySelectField(
     widget = decorate_field(
         wtforms.ext.sqlalchemy.fields.QuerySelectField,
         BootstrapFormControlDecorator,
+        BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
     )
@@ -240,6 +244,7 @@ class QuerySelectMultipleField(
     widget = decorate_field(
         wtforms.ext.sqlalchemy.fields.QuerySelectMultipleField,
         BootstrapFormControlDecorator,
+        BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
         BootstrapFormGroupDecorator
     )

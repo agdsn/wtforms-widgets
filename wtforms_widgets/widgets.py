@@ -265,6 +265,13 @@ class CheckBoxWidget(wtforms.widgets.Select):
         return u''.join(html)
 
 
+class BootstrapFormSelectDecorator(WidgetDecorator):
+    def __call__(self, field, **kwargs):
+        classes = kwargs.get('class_', '').split()
+        kwargs['class_'] = ' '.join(classes + ['form-select'])
+        return self.widget(field, **kwargs)
+
+
 class LazyLoadSelectWidget(wtforms.widgets.Select):
     """This is the widget for the LazyLoadSelectField
 

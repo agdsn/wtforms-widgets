@@ -7,7 +7,7 @@ import wtforms.ext.sqlalchemy
 import wtforms.ext.sqlalchemy.fields
 
 from ..widgets import decorate_field, BootstrapFormControlDecorator, \
-    BootstrapStandardDecorator, BootstrapFormGroupDecorator, \
+    BootstrapStandardDecorator, \
     BootstrapRadioDecorator, BootstrapCheckboxDecorator, \
     BootstrapFieldListWidget, BootstrapFormFieldWidget, \
     BootstrapDatepickerWidget, MoneyFieldDecorator, decorate, \
@@ -20,7 +20,6 @@ class SelectField(wtforms.fields.SelectField):
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -30,7 +29,6 @@ class SelectMultipleField(wtforms.fields.SelectMultipleField):
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -39,7 +37,6 @@ class RadioField(wtforms.fields.RadioField):
     option_widget = decorate(
         wtforms.widgets.RadioInput(),
         BootstrapRadioDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -48,7 +45,6 @@ class StringField(wtforms.fields.StringField):
         wtforms.fields.StringField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -61,7 +57,6 @@ class IntegerField(wtforms.fields.IntegerField):
         wtforms.fields.IntegerField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -70,7 +65,6 @@ class DecimalField(wtforms.fields.DecimalField):
         wtforms.fields.DecimalField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -80,7 +74,6 @@ class MoneyField(wtforms.fields.DecimalField):
         MoneyFieldDecorator,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
     def process_formdata(self, valuelist):
@@ -94,7 +87,6 @@ class FloatField(wtforms.fields.FloatField):
         wtforms.fields.FloatField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -102,7 +94,6 @@ class BooleanField(wtforms.fields.BooleanField):
     widget = decorate_field(
         wtforms.fields.BooleanField,
         BootstrapCheckboxDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -111,7 +102,6 @@ class DateTimeField(wtforms.fields.DateTimeField):
         BootstrapDatepickerWidget(),
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -120,7 +110,6 @@ class DateField(wtforms.fields.DateField):
         BootstrapDatepickerWidget(),
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
     supported_directives = {
         'd': 'dd',
@@ -194,7 +183,6 @@ class TextAreaField(wtforms.fields.TextAreaField):
         wtforms.fields.TextAreaField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -203,7 +191,6 @@ class PasswordField(wtforms.fields.PasswordField):
         wtforms.fields.PasswordField,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -211,7 +198,6 @@ class FileField(wtforms.fields.FileField):
     widget = decorate_field(
         wtforms.fields.FileField,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -222,7 +208,6 @@ HiddenField = wtforms.fields.HiddenField
 class SubmitField(wtforms.fields.SubmitField):
     widget = decorate_field(
         wtforms.fields.SubmitField,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -234,7 +219,6 @@ class QuerySelectField(
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 
@@ -246,7 +230,6 @@ class QuerySelectMultipleField(
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
 

@@ -19,22 +19,6 @@ class WidgetDecorator(object):
         self.widget = widget
 
 
-class BootstrapFormGroupDecorator(WidgetDecorator):
-    """
-    Wraps a widget inside a Bootstrap form-group and prints errors.
-
-    The widget's output is wrapped in a Bootstrap form-group. Any field errors
-    are displayed in Bootstrap help-blocks after the widget.
-    """
-
-    def __call__(self, field, **kwargs):
-        return HTMLString(u''.join([
-            f'<div id="form-group-{field.name}">',
-            self.widget(field, **kwargs),
-            u'</div>'
-        ]))
-
-
 class BootstrapFormControlDecorator(WidgetDecorator):
     """Adds the Bootstrap form-control class to a widget."""
 

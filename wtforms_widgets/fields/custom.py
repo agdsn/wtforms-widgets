@@ -4,7 +4,7 @@ from wtforms.validators import ValidationError
 from . import core
 from ..widgets import LazyLoadSelectWidget, \
     BootstrapFormControlDecorator, BootstrapStandardDecorator, \
-    BootstrapFormGroupDecorator, decorate, BootstrapStaticFieldWidget, \
+    decorate, BootstrapStaticFieldWidget, \
     decorators, decorate_field, Disabler, MacFieldDecorator, \
     BootstrapFormSelectDecorator
 
@@ -82,7 +82,6 @@ class LazyLoadSelectField(fields.SelectField):
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
     def __init__(self, *args, **kwargs):
@@ -165,7 +164,6 @@ class MacField(fields.StringField):
         MacFieldDecorator,
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
-        BootstrapFormGroupDecorator
     )
 
     def __init__(self, *args, **kwargs):

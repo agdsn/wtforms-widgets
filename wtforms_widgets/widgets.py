@@ -30,7 +30,7 @@ class BootstrapFormGroupDecorator(WidgetDecorator):
     def __call__(self, field, **kwargs):
         classes = [u'form-group']
         if field.errors:
-            classes.append(u'text-danger')
+            classes.append(u'text-danger is-invalid')
         return HTMLString(u''.join([
             Markup(u'<div class="{0}" id="form-group-' + field.name + '">')
                 .format(u' '.join(classes)),
@@ -62,12 +62,17 @@ class BootstrapStandardDecorator(WidgetDecorator):
     """
 
     def render_horizontal(self, field, **kwargs):
+        error_html = [
+            Markup('<div class="invalid-feedback">{0}</div>').format(e)
+            for e in field.errors
+        ]
         html = ['<div class="row">',
                 '<div class="col-sm-4">',
                 field.label(class_=u'col-form-label'),
                 '</div>',
                 '<div class="col-sm-4">',
                 self.widget(field, **kwargs),
+                *error_html,
                 '</div>',
                 '</div>']
         help_block = Markup(u'<div class="col-sm-12">'
@@ -75,7 +80,6 @@ class BootstrapStandardDecorator(WidgetDecorator):
                             u'</div>')
         if field.description:
             html.append(help_block.format(field.description))
-        html.extend(help_block.format(e) for e in field.errors)
         return HTMLString(u''.join(html))
 
     def render_inline(self, field, **kwargs):

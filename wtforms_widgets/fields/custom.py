@@ -169,6 +169,8 @@ class MacField(fields.StringField):
     )
 
     def __init__(self, *args, **kwargs):
+        kwargs.setdefault('render_kw', {})
+        kwargs['render_kw'].setdefault('placeholder', '00:de:ad:be:ef:00')
         super(MacField, self).__init__(*args, **kwargs)
 
     def __call__(self, **kwargs):

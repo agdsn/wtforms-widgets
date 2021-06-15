@@ -28,14 +28,11 @@ class BootstrapFormGroupDecorator(WidgetDecorator):
     """
 
     def __call__(self, field, **kwargs):
-        classes = []
-        if field.errors:
-            classes.append(u'text-danger is-invalid')
         return HTMLString(u''.join([
-            Markup(u'<div class="{0}" id="form-group-' + field.name + '">')
-                .format(u' '.join(classes)),
+            f'<div id="form-group-{field.name}">',
             self.widget(field, **kwargs),
-            u'</div>']))
+            u'</div>'
+        ]))
 
 
 class BootstrapFormControlDecorator(WidgetDecorator):
@@ -72,9 +69,12 @@ class BootstrapStandardDecorator(WidgetDecorator):
                 Markup('<div class="col-sm-12"><span class="form-text">{0}</span></div>')
                     .format(field.description)
             )
+        label_classes = ['col-form-labbel']
+        if field.errors:
+            label_classes.append('text-danger')
         html = ['<div class="row">',
                 '<div class="col-sm-4">',
-                field.label(class_=u'col-form-label'),
+                field.label(class_=' '.join(label_classes)),
                 *desc_html,
                 '</div>',
                 '<div class="col-sm-4">',

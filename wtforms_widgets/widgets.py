@@ -66,20 +66,22 @@ class BootstrapStandardDecorator(WidgetDecorator):
             Markup('<div class="invalid-feedback">{0}</div>').format(e)
             for e in field.errors
         ]
+        desc_html = []
+        if field.description:
+            desc_html.append(
+                Markup('<div class="col-sm-12"><span class="form-text">{0}</span></div>')
+                    .format(field.description)
+            )
         html = ['<div class="row">',
                 '<div class="col-sm-4">',
                 field.label(class_=u'col-form-label'),
+                *desc_html,
                 '</div>',
                 '<div class="col-sm-4">',
                 self.widget(field, **kwargs),
                 *error_html,
                 '</div>',
                 '</div>']
-        help_block = Markup(u'<div class="col-sm-12">'
-                            u'<span class="form-text">{0}</span>'
-                            u'</div>')
-        if field.description:
-            html.append(help_block.format(field.description))
         return HTMLString(u''.join(html))
 
     def render_inline(self, field, **kwargs):

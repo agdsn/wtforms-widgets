@@ -301,7 +301,7 @@ class MoneyFieldDecorator(WidgetDecorator):
     def __call__(self, field, **kwargs):
         kwargs['class_'] += ' money-amount'
         return ('<div class="input-group">' + self.widget(field, **kwargs) +
-                '<span class="input-group-append input-group-text">€</span></div>')
+                '<span class="input-group-text">€</span></div>')
 
 
 class MacFieldDecorator(WidgetDecorator):
@@ -309,4 +309,4 @@ class MacFieldDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         return ('<div class="input-group">' + self.widget(field, **kwargs) +
-                '<div class="input-group-append input-group-text mac-manufacturer">?</div></div>')
+                '<div class="input-group-text mac-manufacturer">?</div></div>')

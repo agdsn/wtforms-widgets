@@ -28,7 +28,7 @@ class BootstrapFormGroupDecorator(WidgetDecorator):
     """
 
     def __call__(self, field, **kwargs):
-        classes = [u'form-group']
+        classes = []
         if field.errors:
             classes.append(u'text-danger is-invalid')
         return HTMLString(u''.join([
@@ -122,17 +122,14 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
     wrapper_class = None
 
     def _render(self, field, **kwargs):
+
+        # we need:
+        input_classes = kwargs.get('class_', '').split()
+        kwargs['class_'] = ' '.join(input_classes + ['form-check-input'])
         return HTMLString(u''.join([
-            # TODO fix that: we now have the following schema
-            # https://getbootstrap.com/docs/4.0/components/forms/#horizontal-form
-            u'<div class="',
-            self.wrapper_class,
-            u'">',
-            field.label(
-                u"{0} {1}".format(
-                    self.widget(field, **kwargs),
-                    escape(field.label.text)
-                )),
+            u'<div class="form-check">',
+            self.widget(field, **kwargs),
+            field.label(escape(field.label.text), class_='form-check-label'),
             u'</div>',
         ]))
 
@@ -141,9 +138,9 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
 
     def render_horizontal(self, field, **kwargs):
         return HTMLString(u''.join([
-            u'<div class="offset-sm-4 col-sm-4">',
+            u'<div class="row"><div class="offset-sm-4 col-sm-4">',
             self._render(field, **kwargs),
-            u'</div>',
+            u'</div></div>',
         ]))
 
     def render_inline(self, field, **kwargs):

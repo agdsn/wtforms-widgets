@@ -286,7 +286,8 @@ class MoneyFieldDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         kwargs['class_'] += ' money-amount'
-        return ('<div class="input-group">' + self.widget(field, **kwargs) +
+        group_cls = 'input-group' + ' is-invalid' if field.errors else ''
+        return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
                 '<span class="input-group-text">€</span></div>')
 
 
@@ -294,5 +295,6 @@ class MacFieldDecorator(WidgetDecorator):
     """Adds an addon which shows the vendor."""
 
     def __call__(self, field, **kwargs):
-        return ('<div class="input-group">' + self.widget(field, **kwargs) +
+        group_cls = 'input-group' + ' is-invalid' if field.errors else ''
+        return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
                 '<div class="input-group-text mac-manufacturer">?</div></div>')

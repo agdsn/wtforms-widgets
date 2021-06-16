@@ -53,7 +53,7 @@ class BootstrapStandardDecorator(WidgetDecorator):
                 Markup('<div class="col-sm-12"><span class="form-text">{0}</span></div>')
                     .format(field.description)
             )
-        label_classes = ['col-form-labbel']
+        label_classes = ['col-form-label']
         if field.errors:
             label_classes.append('text-danger')
         html = [f'<div class="row" id="form-group-{field.name}">',

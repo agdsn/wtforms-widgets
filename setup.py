@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 setup(
     name="wtforms-widgets",
     author="The Pycroft Authors",
-    description="Decorator driven wtforms extension with Bootstrap 4 support for Flask",
+    description="Decorator driven wtforms extension with Bootstrap 5 support for Flask",
     long_description=__doc__,
-    version="1.0.7",
+    version="1.0.8",
     url="http://github.com/agdsn/wtforms-widgets/",
     packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,

@@ -105,6 +105,14 @@ class DateTimeField(wtforms.fields.DateTimeField):
     )
 
 
+class TimeField(wtforms.fields.TimeField):
+    widget = decorate_field(
+        wtforms.fields.TimeField,
+        BootstrapFormControlDecorator,
+        BootstrapStandardDecorator,
+    )
+
+
 class DateField(wtforms.fields.DateField):
     widget = decorate(
         BootstrapDatepickerWidget(),

@@ -295,6 +295,6 @@ class MacFieldDecorator(WidgetDecorator):
     """Adds an addon which shows the vendor."""
 
     def __call__(self, field, **kwargs):
-        group_cls = 'input-group' + ' is-invalid' if field.errors else ''
+        group_cls = 'input-group' + (' is-invalid' if field.errors else '')
         return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
                 '<div class="input-group-text mac-manufacturer">?</div></div>')

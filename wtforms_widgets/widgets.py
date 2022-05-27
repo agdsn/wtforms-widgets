@@ -241,6 +241,7 @@ class TempusDominusDatetimePickerWidget:
     """
     def __call__(self, field, **kwargs):
         id = kwargs.pop('id', field.id)
+        kwargs.setdefault("placeholder", "YYYY-MM-DDThh:mm:ssZ")
         options = {
             **kwargs,
             "name": field.name,

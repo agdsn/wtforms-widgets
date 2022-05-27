@@ -247,7 +247,7 @@ class TempusDominusDatetimePickerWidget:
             "id": id,
         }
         input_params = html_params(**options)
-        return HTMLString(Markup("""
+        return HTMLString(f"""
             <div
               class='input-group'
               data-td-target-input='nearest'
@@ -265,7 +265,7 @@ class TempusDominusDatetimePickerWidget:
                 <span class='fa-solid fa-calendar'></span>
               </button>
             </div>
-        """).format(input_params=input_params))
+        """)
 
 
 class CheckBoxWidget(wtforms.widgets.Select):

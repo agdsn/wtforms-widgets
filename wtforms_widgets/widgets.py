@@ -229,6 +229,45 @@ class BootstrapDatepickerWidget(object):
         return HTMLString(u"<input {0}>".format(html_params(**options)))
 
 
+class TempusDominusDatetimePickerWidget:
+    """Renders tempus-dominus datetime fields.
+
+    Must be manually activated by e.g. the following:
+    .. code-block:: ts
+
+        document
+            .querySelectorAll<HTMLAnchorElement>('form [data-role=datetimepicker]')
+            .forEach(el => new td.TempusDominus(el))
+    """
+    def __call__(self, field, **kwargs):
+        id = kwargs.pop('id', field.id)
+        options = {
+            **kwargs,
+            "name": field.name,
+            "id": id,
+        }
+        input_params = html_params(**options)
+        return HTMLString(Markup("""
+            <div
+              class='input-group'
+              data-td-target-input='nearest'
+              data-td-target-toggle='nearest'
+              data-role="datetimepicker"
+            >
+              <input
+                {input_params}
+              >
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                data-td-toggle="datetimepicker"
+              >
+                <span class='fa-solid fa-calendar'></span>
+              </button>
+            </div>
+        """).format(input_params=input_params))
+
+
 class CheckBoxWidget(wtforms.widgets.Select):
     """A simple multi selection widget rendered as Checkbox list.
 

@@ -104,6 +104,10 @@ class DateTimeField(wtforms.fields.DateTimeField):
         BootstrapStandardDecorator,
     )
 
+    def __init__(self, *a, **kw):
+        kw.setdefault("format", "%Y-%m-%dT%H:%M:%S.%f%z")
+        super().__init__(*a, **kw)
+
 
 class TimeField(wtforms.fields.TimeField):
     widget = decorate_field(

@@ -240,12 +240,19 @@ class TempusDominusDatetimePickerWidget:
             .forEach(el => new td.TempusDominus(el))
     """
     def __call__(self, field, **kwargs):
-        id = kwargs.pop('id', field.id)
+        options = {
+            'id': kwargs.pop('id', field.id),
+            'data_role': kwargs.pop('data-role', "datetimepicker")
+        }
+        PICKER_END_KEY = "data-td-datetimepicker-end"
+        if PICKER_END_KEY in kwargs:
+            options[PICKER_END_KEY] = kwargs.pop(PICKER_END_KEY)
+        div_params = html_params(**options)
+
         kwargs.setdefault("placeholder", "YYYY-MM-DDThh:mm:ssZ")
         options = {
             **kwargs,
             "name": field.name,
-            "id": id,
         }
         input_params = html_params(**options)
         return HTMLString(f"""
@@ -253,7 +260,7 @@ class TempusDominusDatetimePickerWidget:
               class='input-group'
               data-td-target-input='nearest'
               data-td-target-toggle='nearest'
-              data-role="datetimepicker"
+              {div_params}
             >
               <input
                 {input_params}

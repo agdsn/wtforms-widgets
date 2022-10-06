@@ -16,6 +16,7 @@ setup(
         'Flask-WTF',
         'MarkupSafe',
         'WTForms<=2.2.1',
+        "WTForms-SQLAlchemy",
     ],
     license="Apache Software License",
     classifiers=[

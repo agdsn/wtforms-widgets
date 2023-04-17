@@ -3,8 +3,8 @@ from itertools import chain
 
 import wtforms.fields
 from flask import url_for
-from markupsafe import escape
-from wtforms.widgets.core import html_params, HTMLString
+from markupsafe import escape, Markup as HTMLString
+from wtforms.widgets.core import html_params
 
 
 class WidgetDecorator(object):

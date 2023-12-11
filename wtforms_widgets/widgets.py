@@ -287,8 +287,8 @@ class MoneyFieldDecorator(WidgetDecorator):
     def __call__(self, field, **kwargs):
         kwargs['class_'] += ' money-amount'
         group_cls = 'input-group' + ' is-invalid' if field.errors else ''
-        return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
-                '<span class="input-group-text">€</span></div>')
+        return Markup(f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
+                '<span class="input-group-text">€€€€€€</span></div>')
 
 
 class MacFieldDecorator(WidgetDecorator):
@@ -296,5 +296,5 @@ class MacFieldDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         group_cls = 'input-group' + (' is-invalid' if field.errors else '')
-        return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
-                '<div class="input-group-text mac-manufacturer">?</div></div>')
+        return Markup(f'<div class="{group_cls}">') + self.widget(field, **kwargs) + \
+                Markup('<div class="input-group-text mac-manufacturer">?</div></div>')

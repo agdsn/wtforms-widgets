@@ -286,7 +286,7 @@ class MoneyFieldDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         kwargs['class_'] += ' money-amount'
-        group_cls = 'input-group' + ' is-invalid' if field.errors else ''
+        group_cls = 'input-group' + (' is-invalid' if field.errors else '')
         return Markup(
             '<div class="{}">{}<span class="input-group-text">€</span></div>'
         ).format(group_cls, self.widget(field, **kwargs))

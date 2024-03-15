@@ -61,7 +61,7 @@ class BootstrapStandardDecorator(WidgetDecorator):
                 field.label(class_=' '.join(label_classes)),
                 *desc_html,
                 '</div>',
-                '<div class="col-sm-4">',
+                '<div class="col-sm-8">',
                 self.widget(field, **kwargs),
                 *error_html,
                 '</div>',
@@ -122,7 +122,7 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
 
     def render_horizontal(self, field, **kwargs):
         return HTMLString(u''.join([
-            f'<div class="row" id="form-group-{field.name}"><div class="offset-sm-4 col-sm-4">',
+            f'<div class="row" id="form-group-{field.name}"><div class="offset-sm-4 col-sm-8">',
             self._render(field, **kwargs),
             u'</div></div>',
         ]))

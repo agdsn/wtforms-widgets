@@ -3,8 +3,7 @@ from datetime import datetime
 from itertools import chain
 
 import wtforms
-import wtforms.ext.sqlalchemy
-import wtforms.ext.sqlalchemy.fields
+import wtforms_sqlalchemy.fields
 
 from ..widgets import decorate_field, BootstrapFormControlDecorator, \
     BootstrapStandardDecorator, \
@@ -220,10 +219,10 @@ class SubmitField(wtforms.fields.SubmitField):
 
 
 class QuerySelectField(
-    wtforms.ext.sqlalchemy.fields.QuerySelectField
+    wtforms_sqlalchemy.fields.QuerySelectField
 ):
     widget = decorate_field(
-        wtforms.ext.sqlalchemy.fields.QuerySelectField,
+        wtforms_sqlalchemy.fields.QuerySelectField,
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,
@@ -231,10 +230,10 @@ class QuerySelectField(
 
 
 class QuerySelectMultipleField(
-    wtforms.ext.sqlalchemy.fields.QuerySelectMultipleField
+    wtforms_sqlalchemy.fields.QuerySelectMultipleField
 ):
     widget = decorate_field(
-        wtforms.ext.sqlalchemy.fields.QuerySelectMultipleField,
+        wtforms_sqlalchemy.fields.QuerySelectMultipleField,
         BootstrapFormControlDecorator,
         BootstrapFormSelectDecorator,
         BootstrapStandardDecorator,

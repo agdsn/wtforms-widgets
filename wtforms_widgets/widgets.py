@@ -3,8 +3,8 @@ from itertools import chain
 
 import wtforms.fields
 from flask import url_for
-from markupsafe import escape
-from wtforms.widgets.core import html_params, HTMLString
+from markupsafe import escape, Markup as HTMLString
+from wtforms.widgets.core import html_params
 
 
 class WidgetDecorator(object):
@@ -286,9 +286,10 @@ class MoneyFieldDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         kwargs['class_'] += ' money-amount'
-        group_cls = 'input-group' + ' is-invalid' if field.errors else ''
-        return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
-                '<span class="input-group-text">€</span></div>')
+        group_cls = 'input-group' + (' is-invalid' if field.errors else '')
+        return Markup(
+            '<div class="{}">{}<span class="input-group-text">€</span></div>'
+        ).format(group_cls, self.widget(field, **kwargs))
 
 
 class MacFieldDecorator(WidgetDecorator):
@@ -296,5 +297,6 @@ class MacFieldDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         group_cls = 'input-group' + (' is-invalid' if field.errors else '')
-        return (f'<div class="{group_cls}">' + self.widget(field, **kwargs) +
-                '<div class="input-group-text mac-manufacturer">?</div></div>')
+        return Markup(
+            '<div class="{}">{}<div class="input-group-text mac-manufacturer">?</div></div>'
+        ).format(group_cls, self.widget(field, **kwargs))

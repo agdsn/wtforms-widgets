@@ -11,7 +11,7 @@ from ..widgets import decorate_field, BootstrapFormControlDecorator, \
     BootstrapRadioDecorator, BootstrapCheckboxDecorator, \
     BootstrapFieldListWidget, BootstrapFormFieldWidget, \
     BootstrapDatepickerWidget, MoneyFieldDecorator, decorate, \
-    BootstrapFormSelectDecorator, TempusDominusDatetimePickerWidget
+    BootstrapFormSelectDecorator
 
 
 class SelectField(wtforms.fields.SelectField):
@@ -99,14 +99,10 @@ class BooleanField(wtforms.fields.BooleanField):
 
 class DateTimeField(wtforms.fields.DateTimeField):
     widget = decorate(
-        TempusDominusDatetimePickerWidget(),
+        BootstrapDatepickerWidget(),
         BootstrapFormControlDecorator,
         BootstrapStandardDecorator,
     )
-
-    def __init__(self, *a, **kw):
-        kw.setdefault("format", "%Y-%m-%dT%H:%M:%S.%f%z")
-        super().__init__(*a, **kw)
 
 
 class TimeField(wtforms.fields.TimeField):

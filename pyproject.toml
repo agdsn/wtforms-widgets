@@ -1,0 +1,40 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wtforms-widgets"
+authors = [{ name = "The Pycroft Authors" }]
+description = "Decorator driven wtforms extension with Bootstrap 5 support for Flask"
+readme = "README.md"
+version = "1.0.8"
+requires-python = ">= 3.5"
+dependencies = [
+    'Flask',
+    'Flask-WTF',
+    'MarkupSafe',
+    'WTForms',
+]
+license = { text = "Apache Software License" }
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: Web Environment',
+    'Framework :: Flask',
+    'Intended Audience :: System Administrators',
+    'License :: OSI Approved :: Apache Software License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+]
+
+[project.optional-dependencies]
+sql = ["WTForms-SQLAlchemy"]
+
+[project.urls]
+Repository = "http://github.com/agdsn/wtforms-widgets/"
+Issues = "http://github.com/agdsn/wtforms-widgets/issues"
+

@@ -1,9 +1,9 @@
 import re
+import typing as t
 from datetime import datetime
 from itertools import chain
 
 import wtforms
-import wtforms_sqlalchemy.fields
 
 from ..widgets import decorate_field, BootstrapFormControlDecorator, \
     BootstrapStandardDecorator, \
@@ -218,26 +218,38 @@ class SubmitField(wtforms.fields.SubmitField):
     )
 
 
-class QuerySelectField(
-    wtforms_sqlalchemy.fields.QuerySelectField
-):
-    widget = decorate_field(
-        wtforms_sqlalchemy.fields.QuerySelectField,
-        BootstrapFormControlDecorator,
-        BootstrapFormSelectDecorator,
-        BootstrapStandardDecorator,
-    )
+try:
+    import wtforms_sqlalchemy.fields
+except ImportError:
+    def __getattr__(name: str) -> t.Any:
+        if name in ("QuerySelectField", "QuerySelectmultipleField"):
+            raise AttributeError(
+                f"To use the {name!r}, install `wtforms_sqalalchemy`"
+                " via the `[sql]` optional dependency group"
+                " (`pip install wtforms-widgets[sql]`)"
+            )
+        raise AttributeError(f"module {__name__!r} has on attribute {name!r}!")
+else:
+    class QuerySelectField(
+        wtforms_sqlalchemy.fields.QuerySelectField
+    ):
+        widget = decorate_field(
+            wtforms_sqlalchemy.fields.QuerySelectField,
+            BootstrapFormControlDecorator,
+            BootstrapFormSelectDecorator,
+            BootstrapStandardDecorator,
+        )
 
 
-class QuerySelectMultipleField(
-    wtforms_sqlalchemy.fields.QuerySelectMultipleField
-):
-    widget = decorate_field(
-        wtforms_sqlalchemy.fields.QuerySelectMultipleField,
-        BootstrapFormControlDecorator,
-        BootstrapFormSelectDecorator,
-        BootstrapStandardDecorator,
-    )
+    class QuerySelectMultipleField(
+        wtforms_sqlalchemy.fields.QuerySelectMultipleField
+    ):
+        widget = decorate_field(
+            wtforms_sqlalchemy.fields.QuerySelectMultipleField,
+            BootstrapFormControlDecorator,
+            BootstrapFormSelectDecorator,
+            BootstrapStandardDecorator,
+        )
 
 
 class FieldList(wtforms.fields.FieldList):

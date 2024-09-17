@@ -70,7 +70,7 @@ class BootstrapStandardDecorator(WidgetDecorator):
 
     def render_inline(self, field, **kwargs):
         return HTMLString(u''.join([
-            field.label(class_=u'sr-only'),
+            field.label(class_="visually-hidden"),
             self.widget(field, placeholder=field.label.text, **kwargs),
         ]))
 

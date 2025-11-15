@@ -88,7 +88,7 @@ class LazyLoadSelectField(fields.SelectField):
         self.conditions = kwargs.pop("conditions")
         self.data_endpoint = kwargs.pop("data_endpoint")
 
-        super(LazyLoadSelectField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def pre_validate(self, form):
         pass
@@ -104,29 +104,29 @@ class ReadonlyTextField(fields.StringField):
 
 
 def expected_interval_format(units):
-    return ' '.join("{{}} {unit}".format(unit=unit) for unit in units)
+    return ' '.join(f"{{}} {unit}" for unit in units)
 
 
 def default_interval_format(units):
-    return ' '.join("0 {unit}".format(unit=unit) for unit in units)
+    return ' '.join(f"0 {unit}" for unit in units)
 
 
 def rebuild_string(values, units):
-    return ' '.join("{} {}".format(v, u) for v, u in zip(values, units))
+    return ' '.join(f"{v} {u}" for v, u in zip(values, units))
 
 
 class IntervalField(core.StringField):
     """A IntervalField """
 
     def __init__(self, *args, **kwargs):
-        super(IntervalField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         kwargs.setdefault('validators', None)
         self.expected_units = ['years', 'mons', 'days', 'hours', 'mins', 'secs']
 
     def __call__(self, **kwargs):
         if self.data is None:
             self.data = default_interval_format(self.expected_units)
-        return super(IntervalField, self).__call__(
+        return super().__call__(
             class_='pycroft-interval-picker',
             # autocomplete='off',
             **kwargs
@@ -134,7 +134,7 @@ class IntervalField(core.StringField):
 
     def pre_validate(self, form):
         expected_format = expected_interval_format(self.expected_units)
-        generic_error = ValidationError("Expected format: {}".format(expected_format))
+        generic_error = ValidationError(f"Expected format: {expected_format}")
 
         tokens = [x for x in self.data.split(' ') if x]
         values = tokens[::2]
@@ -145,12 +145,12 @@ class IntervalField(core.StringField):
         if units != self.expected_units:
             units = self.expected_units
             self.data = rebuild_string(values, units)
-            raise ValidationError(u'Format der Eingabe wurde korrigiert. Bitte prüfen.')
+            raise ValidationError('Format der Eingabe wurde korrigiert. Bitte prüfen.')
 
         try:
             decoded_values = [int(val) for val in values]
         except ValueError:
-            raise ValidationError(u'Die Werte müssen als natürliche Zahlen angegeben werden.')
+            raise ValidationError('Die Werte müssen als natürliche Zahlen angegeben werden.')
 
         if all(val == 0 for val in decoded_values):
             raise ValidationError("Intervalle müssen nichtleer und >0s sein.")
@@ -169,10 +169,10 @@ class MacField(fields.StringField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('render_kw', {})
         kwargs['render_kw'].setdefault('placeholder', '00:de:ad:be:ef:00')
-        super(MacField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def __call__(self, **kwargs):
-        return super(MacField, self).__call__(
+        return super().__call__(
             data_role='mac-address-input',
             **kwargs
         )

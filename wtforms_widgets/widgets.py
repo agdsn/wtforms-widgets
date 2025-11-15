@@ -7,7 +7,7 @@ from markupsafe import escape, Markup as HTMLString
 from wtforms.widgets.core import html_params
 
 
-class WidgetDecorator(object):
+class WidgetDecorator:
     """Decorate widgets."""
 
     def __init__(self, widget):
@@ -24,9 +24,9 @@ class BootstrapFormControlDecorator(WidgetDecorator):
 
     def __call__(self, field, **kwargs):
         if 'class_' in kwargs:
-            kwargs['class_'] = u'form-control ' + kwargs['class_']
+            kwargs['class_'] = 'form-control ' + kwargs['class_']
         else:
-            kwargs['class_'] = u'form-control'
+            kwargs['class_'] = 'form-control'
 
         if field.errors:
             kwargs['class_'] += ' is-invalid'
@@ -66,11 +66,11 @@ class BootstrapStandardDecorator(WidgetDecorator):
                 *error_html,
                 '</div>',
                 '</div>']
-        return HTMLString(u''.join(html))
+        return HTMLString(''.join(html))
 
     def render_inline(self, field, **kwargs):
-        return HTMLString(u''.join([
-            field.label(class_=u'sr-only'),
+        return HTMLString(''.join([
+            field.label(class_='sr-only'),
             self.widget(field, placeholder=field.label.text, **kwargs),
         ]))
 
@@ -78,11 +78,11 @@ class BootstrapStandardDecorator(WidgetDecorator):
         html = [field.label(),
                 '<br/>',
                 self.widget(field, **kwargs)]
-        help_block = Markup(u'<span class="form-text">{0}</span>')
+        help_block = Markup('<span class="form-text">{0}</span>')
         if field.description:
             html.append(help_block.format(field.description))
         html.extend(help_block.format(e) for e in field.errors)
-        return HTMLString(u''.join(html))
+        return HTMLString(''.join(html))
 
     def __call__(self, field, **kwargs):
         render_mode = kwargs.pop("render_mode", "basic")
@@ -93,7 +93,7 @@ class BootstrapStandardDecorator(WidgetDecorator):
         elif render_mode == "inline":
             return self.render_inline(field, **kwargs)
         else:
-            raise ValueError("Unknown render mode: {0}".format(render_mode))
+            raise ValueError(f"Unknown render mode: {render_mode}")
 
 
 class BootstrapRadioCheckboxDecorator(WidgetDecorator):
@@ -110,25 +110,25 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
         # we need:
         input_classes = kwargs.get('class_', '').split()
         kwargs['class_'] = ' '.join(input_classes + ['form-check-input'])
-        return HTMLString(u''.join([
-            u'<div class="form-check">',
+        return HTMLString(''.join([
+            '<div class="form-check">',
             self.widget(field, **kwargs),
             field.label(escape(field.label.text), class_='form-check-label'),
-            u'</div>',
+            '</div>',
         ]))
 
     def render_basic(self, field, **kwargs):
         return self._render(field, **kwargs)
 
     def render_horizontal(self, field, **kwargs):
-        return HTMLString(u''.join([
+        return HTMLString(''.join([
             f'<div class="row" id="form-group-{field.name}"><div class="offset-sm-4 col-sm-4">',
             self._render(field, **kwargs),
-            u'</div></div>',
+            '</div></div>',
         ]))
 
     def render_inline(self, field, **kwargs):
-        return field.label(u"{0} {1}".format(
+        return field.label("{} {}".format(
             self.widget(field, **kwargs),
             escape(field.label.text)
         ), class_=self.wrapper_class + "-inline")
@@ -145,39 +145,39 @@ class BootstrapRadioCheckboxDecorator(WidgetDecorator):
 
 
 class BootstrapRadioDecorator(BootstrapRadioCheckboxDecorator):
-    wrapper_class = u"radio"
+    wrapper_class = "radio"
 
 
 class BootstrapCheckboxDecorator(BootstrapRadioCheckboxDecorator):
-    wrapper_class = u"checkbox"
+    wrapper_class = "checkbox"
 
 
-class BootstrapFieldListWidget(object):
+class BootstrapFieldListWidget:
     def __call__(self, field, **kwargs):
-        return HTMLString(u''.join(chain(
-            (Markup(u'<p class="form-text">{0}</p>').format(e) for e in field.errors),
+        return HTMLString(''.join(chain(
+            (Markup('<p class="form-text">{0}</p>').format(e) for e in field.errors),
             (f(**kwargs) for f in field)
         )))
 
 
-class BootstrapFormFieldWidget(object):
+class BootstrapFormFieldWidget:
     def __call__(self, field, **kwargs):
-        return HTMLString(u"<div class=\"form-field\">" +
-                          u''.join(f(**kwargs) for f in field) +
-                          u"</div>")
+        return HTMLString("<div class=\"form-field\">" +
+                          ''.join(f(**kwargs) for f in field) +
+                          "</div>")
 
 
-class BootstrapStaticFieldWidget(object):
+class BootstrapStaticFieldWidget:
     """Render a static Bootstrap control."""
 
     def __call__(self, field, **kwargs):
-        kwargs["class_"] = u"form-control-static"
+        kwargs["class_"] = "form-control-static"
         # Assume that the field provides access to its value.
         value = field._value()
-        return HTMLString(u''.join([
-            u'<p {}>'.format(html_params(**kwargs)),
+        return HTMLString(''.join([
+            f'<p {html_params(**kwargs)}>',
             value,
-            u'</p>',
+            '</p>',
         ]))
 
 
@@ -215,18 +215,18 @@ def decorate_field(field, *decorators):
 from markupsafe import Markup
 
 
-class BootstrapDatepickerWidget(object):
+class BootstrapDatepickerWidget:
     """Renders datetime fields using bootstrap-datepicker."""
 
     def __call__(self, field, **kwargs):
-        kwargs["data-provide"] = u"datepicker"
+        kwargs["data-provide"] = "datepicker"
         for (option, value) in field.datepicker_options.items():
-            attribute = 'data-date-{0}'.format(option.replace('_', '-'))
+            attribute = 'data-date-{}'.format(option.replace('_', '-'))
             kwargs[attribute] = value
         options = dict(kwargs, name=field.name)
         if field.data:
             options["value"] = field.data
-        return HTMLString(u"<input {0}>".format(html_params(**options)))
+        return HTMLString(f"<input {html_params(**options)}>")
 
 
 class CheckBoxWidget(wtforms.widgets.Select):
@@ -240,15 +240,15 @@ class CheckBoxWidget(wtforms.widgets.Select):
         field_id = kwargs.pop('id', field.id)
         html = []
         for value, label, checked in field.iter_choices():
-            choice_id = u'{}-{}'.format(field_id, value)
+            choice_id = f'{field_id}-{value}'
             options = dict(kwargs, name=field.name, value=value, id=choice_id)
-            html.append(u'<label class="checkbox" {}>'.format(html_params(id=field_id)))
+            html.append(f'<label class="checkbox" {html_params(id=field_id)}>')
             if checked:
                 options['checked'] = 'checked'
-            html.append(u'<input {}>'.format(html_params(**options)))
+            html.append(f'<input {html_params(**options)}>')
             html.append(label)
-            html.append(u'</label>')
-        return u''.join(html)
+            html.append('</label>')
+        return ''.join(html)
 
 
 class BootstrapFormSelectDecorator(WidgetDecorator):
@@ -268,11 +268,11 @@ class LazyLoadSelectWidget(wtforms.widgets.Select):
         conditions = getattr(field, "conditions", None)
         if conditions is not None:
             kwargs["data-fieldids"] = ",".join(conditions)
-        kwargs['data-role'] = u'lazy-load-select'
+        kwargs['data-role'] = 'lazy-load-select'
         kwargs['data-url'] = url_for(field.data_endpoint)
         kwargs['value'] = str(field.data)
 
-        return super(LazyLoadSelectWidget, self).__call__(field, **kwargs)
+        return super().__call__(field, **kwargs)
 
 
 class Disabler(WidgetDecorator):

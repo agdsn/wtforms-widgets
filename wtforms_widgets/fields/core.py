@@ -78,7 +78,7 @@ class MoneyField(wtforms.fields.DecimalField):
     def process_formdata(self, valuelist):
         if valuelist:
             valuelist[0] = valuelist[0].replace(",", ".")
-        return super(MoneyField, self).process_formdata(valuelist)
+        return super().process_formdata(valuelist)
 
 
 class FloatField(wtforms.fields.FloatField):
@@ -142,10 +142,10 @@ class DateField(wtforms.fields.DateField):
     def __init__(self, label=None, validators=None, format='%Y-%m-%d',
                  **kwargs):
         # Move Bootstrap datepicker specific options to its own dict
-        self.datepicker_options = dict((
-            (option, value) for (option, value) in kwargs.items()
+        self.datepicker_options = {
+            option: value for (option, value) in kwargs.items()
             if option in self.available_datepicker_options
-        ))
+        }
         for option in self.datepicker_options.keys():
             kwargs.pop(option)
         defaults = {'default': datetime.utcnow(), 'language': 'de',
@@ -155,7 +155,7 @@ class DateField(wtforms.fields.DateField):
         # The format option is used by both DateField and Bootstrap datepicker,
         # albeit with a different format string syntax.
         self.datepicker_options['format'] = self.convert_format_string(format)
-        super(DateField, self).__init__(label, validators, format, **kwargs)
+        super().__init__(label, validators, format, **kwargs)
 
     @classmethod
     def _replacement_function(cls, match):
@@ -172,7 +172,7 @@ class DateField(wtforms.fields.DateField):
                       "Bootstrap datepicker.".format(directive)
             raise ValueError(message)
         else:
-            message = "Unknown format directive: %{}".format(directive)
+            message = f"Unknown format directive: %{directive}"
             raise ValueError(message)
         return percentage_signs[0:percentage_sign_count // 2] + replacement
 

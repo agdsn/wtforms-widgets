@@ -9,7 +9,7 @@ class OptionalIf(Optional):
     def __init__(self, deciding_field, invert=False, *args, **kwargs):
         self.deciding_field = deciding_field
         self.invert = invert
-        super(OptionalIf, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def __call__(self, form, field):
         deciding_field = form._fields.get(self.deciding_field)
@@ -29,4 +29,4 @@ class OptionalIf(Optional):
 
 class MacAddress(Regexp):
     def __init__(self, message=None):
-        super(MacAddress, self).__init__(mac_regex, message=message)
+        super().__init__(mac_regex, message=message)

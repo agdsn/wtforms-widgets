@@ -17,4 +17,4 @@ class BaseForm(Form):
 
             self._fields = ordered_fields
 
-        return super(BaseForm, self).__iter__()
+        return super().__iter__()
